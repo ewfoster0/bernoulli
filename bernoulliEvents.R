@@ -2,17 +2,16 @@
 
 library(tidyverse)
 
-
-# Create a function to simulate the DNA extension process
-extend <- function(cycles, stepwise_yield) {
+# Create a function to simulate the binomial distribution
+binomial_simulation <- function(n, p) {
   # Initialize the product size distribution
   product_sizes <- c()
   
   # For each cycle
-  for (i in 1:cycles) {
+  for (i in 1:n) {
     
     # Calculate the number of bases extended
-    extended_bases <- (1 - stepwise_yield) * i
+    extended_bases <- rbinom(1, p)
     
     # Add extended bases to the product size distribution
     product_sizes <- c(product_sizes, extended_bases)
@@ -22,8 +21,8 @@ extend <- function(cycles, stepwise_yield) {
   product_sizes
 }
 
-# Simulate the DNA extension process for 100 cycles with a 95% stepwise yield
-product_sizes <- extend(100, 0.95)
+# Simulate the binomial distribution for 100 cycles with a 95% stepwise yield
+product_sizes <- binomial_simulation(100, 0.95)
 
-# Plot the product size distribution
-hist(product_sizes)
+# Plot the ecdf
+plot.ecdf(product_sizes)
